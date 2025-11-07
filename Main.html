@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Student - Teach AI, Don't Learn From It</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100px, -1000px); opacity: 0; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 40px 0;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-button {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 100px 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #ffd89b, #19547b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(45deg); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Feature Cards */
+        .features {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.4s; }
+        .feature-card:nth-child(2) { animation-delay: 0.6s; }
+        .feature-card:nth-child(3) { animation-delay: 0.8s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            position: relative;
+            z-index: 10;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: 3rem;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.2s; }
+        .step:nth-child(2) { animation-delay: 0.4s; }
+        .step:nth-child(3) { animation-delay: 0.6s; }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Teach Section */
+        .teach-section {
+            position: relative;
+            z-index: 10;
+            padding: 80px 0;
+            min-height: 600px;
+        }
+
+        .teach-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .teach-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .teach-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .teach-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Topic Selection */
+        .topic-selection {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .topic-selection h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .topic-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .start-button {
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            border: none;
+            border-radius: 15px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .conversation-area {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .reset-button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+        }
+
+        .reset-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .current-topic {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .current-topic strong {
+            color: #ffd89b;
+        }
+
+        .conversation-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .conversation-area::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .conversation-area::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 15px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .message.user {
+            background: rgba(118, 75, 162, 0.4);
+            margin-left: 60px;
+            text-align: right;
+        }
+
+        .message.ai {
+            background: rgba(102, 126, 234, 0.4);
+            margin-right: 60px;
+        }
+
+        .message-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .teach-input {
+            flex: 1;
+            padding: 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .teach-button {
+            padding: 20px 40px;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            border: none;
+            border-radius: 15px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .teach-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd89b;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .how-it-works h2 { font-size: 2rem; }
+            .teach-container { padding: 30px; }
+            .conversation-area { padding: 20px; }
+            .message.user { margin-left: 20px; }
+            .message.ai { margin-right: 20px; }
+            .input-area { flex-direction: column; }
+            .teach-button { width: 100%; }
+            .header-content { flex-direction: column; gap: 20px; }
+            .nav-tabs { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Particles -->
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Reverse Student - Adam Chalaby</div>
+                <nav class="nav-tabs">
+                    <button class="tab-button active" onclick="switchTab('home')">Home</button>
+                    <button class="tab-button" onclick="switchTab('teach')">Start Teaching</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Tab -->
+    <div id="homeTab" class="tab-content active">
+        <section class="hero">
+            <div class="container">
+                <h1>You're the <span class="gradient-text">Teacher</span> Now</h1>
+                <p class="subtitle">Stop learning from AI. Start teaching it instead.</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container" style="display: contents;">
+                <div class="feature-card">
+                    <div class="icon">🎓</div>
+                    <h3>Flip the Script</h3>
+                    <p>Traditional AI teaches you. Here, you become the instructor and shape how AI understands your expertise.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🧠</div>
+                    <h3>Strengthen Knowledge</h3>
+                    <p>The best way to truly understand something is to teach it. Train AI and master your subject.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h3>Build Intelligence</h3>
+                    <p>Your lessons create a custom AI that thinks like you. Watch it grow with every interaction.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Share Your Knowledge</h3>
+                        <p>Teach the AI about any topic you're passionate about or expert in.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>AI Learns & Questions</h3>
+                        <p>The AI asks clarifying questions and adapts to your teaching style.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Test Understanding</h3>
+                        <p>Quiz your AI student to see how well it learned from you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Reverse Student. Empowering teachers, not students.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Teach Tab -->
+    <div id="teachTab" class="tab-content">
+        <section class="teach-section">
+            <div class="container">
+                <div class="teach-container">
+                    <div class="teach-header">
+                        <h1>Teach Your AI Student</h1>
+                        <p>Share your knowledge and watch your AI student learn from you</p>
+                    </div>
+
+                    <!-- Topic Selection (Initial) -->
+                    <div class="topic-selection" id="topicSelection">
+                        <h2>What topic are you teaching me today?</h2>
+                        <input type="text" class="topic-input" id="topicInput" placeholder="e.g., Photography, Cooking, Programming, History...">
+                        <br>
+                        <button class="start-button" onclick="startTeaching()">Start Teaching</button>
+                    </div>
+
+                    <!-- Teaching Interface (Hidden Initially) -->
+                    <div id="teachingInterface" class="hidden">
+                        <div class="current-topic" id="currentTopic"></div>
+                        
+                        <button class="reset-button" onclick="resetChat()">Reset Chat</button>
+                        
+                        <div class="conversation-area" id="conversationArea">
+                            
+                        </div>
+
+                        <div class="input-area">
+                            <input type="text" class="teach-input" id="teachInput" placeholder="Type your lesson here...">
+                            <button class="teach-button" onclick="sendMessage()">Teach</button>
+                        </div>
+
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-number" id="messageCount">1</div>
+                                <div class="stat-label">Messages</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Reverse Student. Empowering teachers, not students.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Create animated particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (tabName === 'home') {
+                document.getElementById('homeTab').classList.add('active');
+                buttons[0].classList.add('active');
+            } else {
+                document.getElementById('teachTab').classList.add('active');
+                buttons[1].classList.add('active');
+            }
+        }
+
+        // Teaching conversation
+        const responses = [
+            "Fascinating! Tell me more about that concept...",
+            "I'm starting to understand. Can you give me an example?",
+            "This is interesting! How does this relate to other topics?",
+            "I think I'm getting it. Let me try to explain it back to you...",
+            "That's a great explanation! What should I know next?",
+            "Wow, I never thought about it that way before!",
+            "This is making sense now. What are the key points I should remember?",
+            "Could you explain that part in more detail?",
+            "I see the connection now! This reminds me of what you taught earlier.",
+            "Thank you for breaking that down! What else is important about this topic?"
+        ];
+
+        let messageCount = 1;
+        let topicCount = 0;
+        let currentTopicName = '';
+
+        async function startTeaching() {
+            const topicInput = document.getElementById('topicInput');
+            const topic = topicInput.value.trim();
+            if (!topic) {
+                alert('Please enter a topic to teach!');
+                return;
+            }
+
+            currentTopicName = topic;
+
+            // Hide topic selection and show teaching interface
+            document.getElementById('topicSelection').style.display = 'none';
+            document.getElementById('teachingInterface').classList.remove('hidden');
+
+            // Update current topic display
+            document.getElementById('currentTopic').innerHTML = `Teaching Topic: <strong>${topic}</strong>`;
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/topic', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic: topic })
+                });
+                const data = await response.json();
+                const aiText = data.result || `Error: ${data.error || 'No response'}`;
+
+                // Clear any placeholder message in conversation area
+                const conversationArea = document.getElementById('conversationArea');
+                conversationArea.innerHTML = '';  // **clear placeholder**
+
+                // Add the AI’s response message
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message ai';
+                aiMessage.innerHTML = `
+                    <div class="message-label">AI Student</div>
+                    <div>${aiText}</div>
+                `;
+                conversationArea.appendChild(aiMessage);
+
+                messageCount++;
+                document.getElementById('messageCount').textContent = messageCount;
+                conversationArea.scrollTop = conversationArea.scrollHeight;
+
+            } catch (error) {
+                console.error('Error sending topic to Flask API:', error);
+                const conversationArea = document.getElementById('conversationArea');
+                conversationArea.innerHTML = '';  // clear placeholder
+
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message ai';
+                aiMessage.innerHTML = `
+                    <div class="message-label">AI Student</div>
+                    <div>Great! I'm excited to learn about ${topic}. Please start teaching me!</div>
+                `;
+                conversationArea.appendChild(aiMessage);
+
+                messageCount++;
+                document.getElementById('messageCount').textContent = messageCount;
+                conversationArea.scrollTop = conversationArea.scrollHeight;
+            }
+        }
+
+
+
+        function resetChat() {
+            // Reset counters
+            messageCount = 1;
+            topicCount = 0;
+            currentTopicName = '';
+            
+            // Clear conversation area
+            const conversationArea = document.getElementById('conversationArea');
+            conversationArea.innerHTML = `
+                
+            `;
+            
+            // Reset stats
+            document.getElementById('messageCount').textContent = '1';
+            
+            // Clear input
+            document.getElementById('teachInput').value = '';
+            document.getElementById('topicInput').value = '';
+            
+            // Hide teaching interface and show topic selection
+            document.getElementById('teachingInterface').classList.add('hidden');
+            document.getElementById('topicSelection').style.display = 'block';
+        }
+
+        async function sendMessage() {
+                const input = document.getElementById('teachInput');
+                const conversationArea = document.getElementById('conversationArea');
+                const messageText = input.value.trim();
+                
+                if (!messageText) return;
+
+                if (!currentTopicName) {
+                    alert("Please set a topic first!");
+                    return;
+                }
+
+                // Add user's message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.innerHTML = `
+                    <div class="message-label">You (Teacher)</div>
+                    <div>${messageText}</div>
+                `;
+                conversationArea.appendChild(userMessage);
+                input.value = '';
+                messageCount++;
+                document.getElementById('messageCount').textContent = messageCount;
+
+                // Call Flask API for AI response
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/explanation', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            topic: currentTopicName,
+                            explanation: messageText
+                        })
+                    });
+
+                    const data = await response.json();
+                    const aiText = data.result || `Error: ${data.error || 'No response'}`;
+
+                    // Add AI message to conversation
+                    const aiMessage = document.createElement('div');
+                    aiMessage.className = 'message ai';
+                    aiMessage.innerHTML = `
+                        <div class="message-label">AI Student</div>
+                        <div>${aiText}</div>
+                    `;
+                    conversationArea.appendChild(aiMessage);
+
+                    // Update message count and scroll
+                    messageCount++;
+                    document.getElementById('messageCount').textContent = messageCount;
+                    conversationArea.scrollTop = conversationArea.scrollHeight;
+
+                } catch (error) {
+                    console.error('Error calling Flask API:', error);
+                }
+            }
+            
+        // Enter key support
+        document.getElementById('teachInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.getElementById('topicInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startTeaching();
+            }
+        });
+    </script>
+</body>
+</html>
