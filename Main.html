@@ -728,7 +728,7 @@
             document.getElementById('currentTopic').innerHTML = `Teaching Topic: <strong>${topic}</strong>`;
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/topic', {
+                const response = await fetch('https://reversestudent.onrender.com/topic', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ topic: topic })
@@ -824,7 +824,7 @@
 
                 // Call Flask API for AI response
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/explanation', {
+                    const response = await fetch('https://reversestudent.onrender.com/explanation', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ 
